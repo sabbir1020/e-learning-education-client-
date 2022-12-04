@@ -8,13 +8,18 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../../context/AuthProvider/AuthProvider";
 
 const Header = () => {
-  const { user } = useContext(AuthContext);
-  console.log(user.displayName);
+  const { user, logOut } = useContext(AuthContext);
+  //   console.log(user.displayName);
+  const signOutHandle = () => {
+    logOut().then(() => {});
+  };
   return (
     <div>
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Container>
-          <Navbar.Brand href="#home">Our Education </Navbar.Brand>
+          <Navbar.Brand>
+            <Link to="/home">Our Education</Link>
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
@@ -37,16 +42,22 @@ const Header = () => {
               </NavDropdown> */}
             </Nav>
             <Nav>
-              <Link to="/login">
-                <Button>Login</Button>
-              </Link>
-              <Link to="/register">
-                <Button>Register</Button>
-              </Link>
+              {user?.displayName ? (
+                <Button onClick={signOutHandle}>Sign Out </Button>
+              ) : (
+                <>
+                  <Link to="/login">
+                    <Button>Login</Button>
+                  </Link>
+                  <Link to="/register">
+                    <Button>Register</Button>
+                  </Link>
+                </>
+              )}
 
-              <Nav.Link href="#deets">More deets</Nav.Link>
+              <Nav.Link href="#deets"> {user?.displayName}</Nav.Link>
               <Nav.Link eventKey={2} href="#memes">
-                {user.displayName}
+                More deets
               </Nav.Link>
             </Nav>
           </Navbar.Collapse>

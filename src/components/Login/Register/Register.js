@@ -1,8 +1,24 @@
-import React from "react";
+import { GoogleAuthProvider } from "firebase/auth";
+import React, { useContext } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../../context/AuthProvider/AuthProvider";
 const Register = () => {
+  const { googleSign } = useContext(AuthContext);
+  console.log(googleSign);
+  const googleProvider = new GoogleAuthProvider();
+  const handleGoogleSign = () => {
+    googleSign(googleProvider)
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+      })
+      .catch((error) => {
+        const errorMessage = error.message;
+        console.log(errorMessage);
+      });
+  };
   return (
     <div>
       <h1> Register </h1>
@@ -36,6 +52,10 @@ const Register = () => {
         </Button>
       </Form>
       <Link to="/login"> Login pages </Link>
+      <div className="text-center ">
+        <Button onClick={handleGoogleSign}>Google sign</Button>
+        <Button>Github sign</Button>
+      </div>
     </div>
   );
 };
