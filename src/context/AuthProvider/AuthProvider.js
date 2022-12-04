@@ -4,6 +4,7 @@ import {
   createUserWithEmailAndPassword,
   getAuth,
   onAuthStateChanged,
+  signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
 } from "firebase/auth";
@@ -16,6 +17,10 @@ const AuthProvider = ({ children }) => {
   //   createUser email and password
   const createUser = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password);
+  };
+  //   signInWith email and password
+  const signInEmailPassword = (email, password) => {
+    return signInWithEmailAndPassword(auth, email, password);
   };
   // google sign in with firebase
   const googleSign = (provider) => {
@@ -37,7 +42,14 @@ const AuthProvider = ({ children }) => {
     });
     return () => unsubscribe();
   }, []);
-  const values = { user, createUser, googleSign, gitHubSign, logOut };
+  const values = {
+    user,
+    createUser,
+    signInEmailPassword,
+    googleSign,
+    gitHubSign,
+    logOut,
+  };
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
 };
 
