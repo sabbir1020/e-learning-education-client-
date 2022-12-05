@@ -10,14 +10,7 @@ const Main = () => {
   return (
     <div>
       <Header></Header>
-      <Container>
-        <Row>
-          <Col lg="4"> This is Right side nav </Col>
-          <Col lg="8">
-            <Outlet></Outlet>
-          </Col>
-        </Row>
-      </Container>
+      <Outlet></Outlet>
       <Footer></Footer>
     </div>
   );

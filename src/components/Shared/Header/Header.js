@@ -16,33 +16,24 @@ const Header = () => {
   return (
     <div>
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-        <Container>
+        <Container className="headerContainer">
           <Navbar.Brand>
-            <Link to="/home">Our Education</Link>
+            <Link to="/">Our Education</Link>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link href="">Courses</Nav.Link>
+              <Nav.Link>
+                <Link to="/home">Home</Link>
+              </Nav.Link>
+              <Nav.Link>
+                <Link to="/courses">Courses</Link>
+              </Nav.Link>
               <Nav.Link>
                 <Link to="/blog"> Blogs</Link>
               </Nav.Link>
 
               <Nav.Link href="">FAQ</Nav.Link>
-
-              {/* <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">
-                  Another action
-                </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">
-                  Something
-                </NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#action/3.4">
-                  Separated link
-                </NavDropdown.Item>
-              </NavDropdown> */}
             </Nav>
             <Nav>
               {user?.displayName ? (
@@ -50,7 +41,7 @@ const Header = () => {
               ) : (
                 <>
                   <Link to="/login">
-                    <Button>Login</Button>
+                    <Button className="me-3">Login</Button>
                   </Link>
                   <Link to="/register">
                     <Button>Register</Button>

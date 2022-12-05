@@ -13,25 +13,31 @@ export const AuthContext = createContext(app);
 const AuthProvider = ({ children }) => {
   const auth = getAuth();
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   //   createUser email and password
   const createUser = (email, password) => {
+    setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
   //   signInWith email and password
   const signInEmailPassword = (email, password) => {
+    setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
   // google sign in with firebase
   const googleSign = (provider) => {
+    setLoading(true);
     return signInWithPopup(auth, provider);
   };
   //    github sign in with firebase
   const gitHubSign = (provider) => {
+    setLoading(true);
     return signInWithPopup(auth, provider);
   };
   //   sign out
   const logOut = () => {
+    setLoading(true);
     return signOut(auth);
   };
 
@@ -39,11 +45,13 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
+      setLoading(false);
     });
     return () => unsubscribe();
   }, []);
   const values = {
     user,
+    loading,
     createUser,
     signInEmailPassword,
     googleSign,
