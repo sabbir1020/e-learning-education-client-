@@ -7,6 +7,7 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 export const AuthContext = createContext(app);
 
@@ -35,6 +36,9 @@ const AuthProvider = ({ children }) => {
     setLoading(true);
     return signInWithPopup(auth, provider);
   };
+  const updateUserProfile = (profile) => {
+    return updateProfile(auth.currentUser, profile);
+  };
   //   sign out
   const logOut = () => {
     setLoading(true);
@@ -53,6 +57,7 @@ const AuthProvider = ({ children }) => {
     user,
     loading,
     createUser,
+    updateUserProfile,
     signInEmailPassword,
     googleSign,
     gitHubSign,

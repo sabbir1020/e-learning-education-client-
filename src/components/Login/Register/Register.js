@@ -5,7 +5,8 @@ import Form from "react-bootstrap/Form";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../context/AuthProvider/AuthProvider";
 const Register = () => {
-  const { createUser, googleSign, gitHubSign } = useContext(AuthContext);
+  const { createUser, updateUserProfile, googleSign, gitHubSign } =
+    useContext(AuthContext);
   //   console.log(googleSign);
   const googleProvider = new GoogleAuthProvider();
   const githubProvider = new GithubAuthProvider();
@@ -15,14 +16,29 @@ const Register = () => {
     event.preventDefault();
     const form = event.target;
     const name = form.name.value;
+    const photoURL = form.photoURL.value;
     const email = form.email.value;
     const password = form.password.value;
     // console.log(name, email, password);
     createUser(email, password)
       .then((result) => {
         const user = result.user;
+        form.reset();
+        handleUpDateUserProfile(name, photoURL);
         console.log(user);
       })
+      .catch((error) => {
+        const errorMessage = error.message;
+        console.log(errorMessage);
+      });
+  };
+  const handleUpDateUserProfile = (name, photoURL) => {
+    const profile = {
+      displayName: name,
+      photoURL: photoURL,
+    };
+    updateUserProfile(profile)
+      .then(() => {})
       .catch((error) => {
         const errorMessage = error.message;
         console.log(errorMessage);
@@ -63,6 +79,14 @@ const Register = () => {
             name="name"
             type="text"
             placeholder="Enter Your Full Name"
+          />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label>Full Name</Form.Label>
+          <Form.Control
+            name="photoURL"
+            type="photoURL"
+            placeholder="Enter Your photo"
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicEmail">

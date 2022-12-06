@@ -1,10 +1,11 @@
 import { GithubAuthProvider, GoogleAuthProvider } from "firebase/auth";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../context/AuthProvider/AuthProvider";
 const Login = () => {
+  const [error, setError] = useState(null);
   const { signInEmailPassword, googleSign, gitHubSign } =
     useContext(AuthContext);
   const googleProvider = new GoogleAuthProvider();
@@ -23,10 +24,13 @@ const Login = () => {
       .then((result) => {
         const user = result.user;
         navigate(from, { replace: true });
+        setError("");
+        form.reset();
         console.log(user);
       })
       .catch((error) => {
         const errorMessage = error.message;
+        setError(errorMessage);
         console.log(errorMessage);
       });
   };
@@ -35,6 +39,7 @@ const Login = () => {
     googleSign(googleProvider)
       .then((result) => {
         const user = result.user;
+
         navigate(from, { replace: true });
         console.log(user);
       })
@@ -69,7 +74,6 @@ const Login = () => {
             required
           />
         </Form.Group>
-
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
           <Form.Control
@@ -79,7 +83,7 @@ const Login = () => {
             required
           />
         </Form.Group>
-
+        <Form.Text className="text-muted">{error}</Form.Text> <br />
         <Button variant="primary" type="submit">
           Submit
         </Button>
